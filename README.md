@@ -1,4 +1,4 @@
-﻿# english-tutor-bot
+# english-tutor-bot
 🇬🇧 English Descriptions
 Short & Punchy (Ideal for Bio/Tagline)
 Your 24/7 AI English Partner. 🚀 Practice conversation, get instant grammar corrections, and build your confidence in English—one chat at a time.
@@ -29,3 +29,17 @@ Dicas Extras para o seu Bot:
 Tom de Voz: Se o seu bot for mais descontraído, você pode substituir termos como "Correções" por "Dicas Amigáveis".
 
 Call to Action: Termine a descrição com um convite, como: "Say 'Hello' to start our first lesson!" ou "Diga 'Oi' para começarmos nossa primeira aula!"
+
+## Project Structure
+
+This repository is organized into two main versions of the application, plus a directory for Python examples:
+
+-   `/html-version/`: A lightweight version of the application built with HTML, CSS, and JavaScript. This version is ideal for quick access and testing the core logic. You can access it at [html-version/index.html](html-version/index.html).
+
+-   `/flutter-version/`: A full-featured version of the application built with Flutter. This version provides a richer user experience.
+
+-   `/python-examples/`: A collection of Python scripts that were used for prototyping and experimentation.
+
+## How to Run
+
+You can access the main landing page at [index.html](index.html), which will allow you to choose which version of the application you would like to use.
