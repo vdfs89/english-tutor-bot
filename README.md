@@ -1,31 +1,37 @@
-﻿# english-tutor-bot
-🇬🇧 English Descriptions
-Short & Punchy (Ideal for Bio/Tagline)
-Your 24/7 AI English Partner. 🚀 Practice conversation, get instant grammar corrections, and build your confidence in English—one chat at a time.
+# 🤖 English Tutor Bot
 
-Detailed (Ideal for "About" section)
-Unlock your fluency with [Bot Name]! > Whether you're preparing for a job interview, a trip, or just want to improve your daily speaking skills, I am here to help.
+[Português](#descrição-pt) | [English](#description-en)
 
-Real-time Corrections: I'll polish your grammar and vocabulary as we talk.
+---
 
-Natural Conversations: Practice speaking about any topic in a judgment-free zone.
+## <a name="description-en"></a> 🇬🇧 Description
+**Your 24/7 AI English Partner.** 🚀 
+Unlock your fluency with English Tutor Bot! Whether you're preparing for a job interview, a trip, or just want to improve your daily speaking skills, this bot is here to help in a judgment-free zone.
 
-Personalized Learning: I adapt to your level, from beginner to advanced.
+### ✨ Key Features:
+* **Real-time Corrections:** Polishes your grammar and vocabulary as you chat.
+* **Natural Conversations:** Practice any topic to build confidence.
+* **Personalized Learning:** Adapts to your level, from beginner to advanced.
 
-🇧🇷 Descrições em Português
-Curta e Direta (Ideal para Bio/Tagline)
-Seu parceiro de IA para fluência em inglês 24/7. 🚀 Pratique conversação, receba correções instantâneas e ganhe confiança no inglês, conversa por conversa.
+---
 
-Detalhada (Ideal para a seção "Sobre")
-Alcance a fluência com o [Nome do Bot]! > Esteja você se preparando para uma entrevista de emprego, uma viagem ou apenas queira melhorar sua fala no dia a dia, estou aqui para ajudar.
+## <a name="descrição-pt"></a> 🇧🇷 Descrição
+**Seu parceiro de IA para fluência em inglês 24/7.** 🚀 
+Alcance a fluência com o English Tutor Bot! Esteja você se preparando para uma entrevista de emprego, uma viagem ou apenas queira melhorar sua fala no dia a dia, este bot está aqui para ajudar em um ambiente livre de julgamentos.
 
-Correções em tempo real: Ajusto sua gramática e vocabulário enquanto conversamos.
+### ✨ Principais Funcionalidades:
+* **Correções em tempo real:** Ajusta sua gramática e vocabulário enquanto você conversa.
+* **Conversas Naturais:** Pratique qualquer assunto para ganhar confiança.
+* **Aprendizado Personalizado:** Adapta-se ao seu nível, do iniciante ao avançado.
 
-Conversas Naturais: Pratique qualquer assunto em um ambiente livre de julgamentos.
+---
 
-Aprendizado Personalizado: Eu me adapto ao seu nível, do iniciante ao avançado.
+## 🛠️ Technologies / Tecnologias
+* [Language/Framework: ex: Python, Flutter, React]
+* [AI Engine: ex: Google Gemini API]
+* [Hosting: GitHub Pages / Vercel]
 
-Dicas Extras para o seu Bot:
-Tom de Voz: Se o seu bot for mais descontraído, você pode substituir termos como "Correções" por "Dicas Amigáveis".
-
-Call to Action: Termine a descrição com um convite, como: "Say 'Hello' to start our first lesson!" ou "Diga 'Oi' para começarmos nossa primeira aula!"
+## 🚀 How to run / Como rodar
+1. Clone the repository / Clone o repositório:
+   ```bash
+   git clone [https://github.com/vdfs89/english-tutor-bot.git](https://github.com/vdfs89/english-tutor-bot.git)
