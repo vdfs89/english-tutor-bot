@@ -1,0 +1,9 @@
+python-dotenv
+jupyterlab
+groq
+langchain
+langchain-groq
+gTTS
+pygame
+streamlit-mic-recorder
+streamlit
