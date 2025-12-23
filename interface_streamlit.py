@@ -11,6 +11,15 @@ import tempfile
 st.set_page_config(page_title="English Tutor AI", page_icon="🇬🇧", layout="wide")
 st.title("🇬🇧 English Conversation Partner")
 
+# CSS Hack para esconder elementos padrão do Streamlit e parecer mais um app nativo
+st.markdown("""
+    <style>
+        #MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
+        header {visibility: hidden;}
+    </style>
+""", unsafe_allow_html=True)
+
 # 1. Carrega variáveis de ambiente
 load_dotenv()
 
@@ -22,8 +31,11 @@ if not os.getenv("GROQ_API_KEY"):
 if "messages" not in st.session_state:
     st.session_state.messages = [
         ("system", "You are a friendly English tutor. Your goal is to help the user practice English conversation. "
-                   "Speak only in English. If the user makes a grammatical error, gently correct them inside your response, "
-                   "but keep the conversation flowing naturally.")
+                   "Speak only in English. "
+                   "If the user makes a grammatical error, gently correct them. "
+                   "Also, pay attention to potential pronunciation errors where the transcribed word fits phonetically but not contextually (e.g., 'tree' vs 'three', 'ship' vs 'sheep'). "
+                   "If you suspect such an error, kindly explain the difference and the correct pronunciation. "
+                   "Keep the conversation flowing naturally.")
     ]
 
 if "chat" not in st.session_state:
@@ -76,6 +88,14 @@ if audio:
                 
         except Exception as e:
             st.error(f"Error processing audio: {e}")
+
+if st.button("💡 I'm stuck! Suggest a topic"):
+    processar_resposta("I'm running out of ideas. Could you suggest an interesting topic for us to discuss and ask me a question about it?")
+    st.rerun()
+
+if st.button("📊 Evaluate my English Level"):
+    processar_resposta("Please evaluate my English proficiency level (A1-C2) based on our conversation so far. Analyze my grammar, vocabulary, and sentence structure, and give me a specific level with a brief explanation.")
+    st.rerun()
 
 # 3. Exibe o histórico de chat
 for role, content in st.session_state.messages:
