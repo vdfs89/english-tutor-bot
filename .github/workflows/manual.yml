@@ -1,0 +1,46 @@
+name: Build and Deploy English Tutor Bot
+
+on:
+  push:
+    branches:
+      - main  # O deploy acontece toda vez que você der push para a main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Faz o checkout do seu código
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2. Instala o Flutter no servidor do GitHub
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      # 3. Resolve as dependências e constrói a versão Web do Flutter
+      - name: Build Flutter Web
+        run: |
+          cd flutter-version
+          flutter pub get
+          flutter build web --release --base-href "/english-tutor-bot/flutter-version/"
+
+      # 4. Organiza os arquivos para o deploy final
+      - name: Prepare Deployment Folder
+        run: |
+          mkdir -p deploy/flutter-version
+          # Copia a Landing Page principal
+          cp index.html deploy/
+          # Copia a versão HTML/JS
+          cp -r html-version/ deploy/
+          # Copia os arquivos compilados do Flutter
+          cp -r flutter-version/build/web/* deploy/flutter-version/
+
+      # 5. Envia tudo para a branch 'gh-pages' que o GitHub usa para o site
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: deploy
+          branch: gh-pages # O site ficará nesta branch
