@@ -1,0 +1,60 @@
+name: Deploy Static Content to Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # --- INÍCIO DO PASSO FLUTTER ---
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Build Flutter Web
+        run: |
+          cd flutter-version
+          flutter pub get
+          flutter build web --release --base-href "/english-tutor-bot/flutter-version/"
+      # --- FIM DO PASSO FLUTTER ---
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Create Deployment Structure
+        run: |
+          mkdir -p _site/flutter-version
+          # Copia o menu principal (Landing Page) para a raiz
+          cp index.html _site/
+          # Copia a versão leve em HTML/JS
+          cp -r html-version/* _site/html-version/ || cp -r html-version _site/
+          # Copia os arquivos gerados pelo Flutter para a subpasta correta
+          cp -r flutter-version/build/web/* _site/flutter-version/
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './_site'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
