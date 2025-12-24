@@ -5,6 +5,9 @@ on:
     branches:
       - main  # O deploy acontece toda vez que você der push para a main
 
+permissions:
+  contents: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -31,12 +34,17 @@ jobs:
       - name: Prepare Deployment Folder
         run: |
           mkdir -p deploy/flutter-version
+          mkdir -p deploy/python-version
           # Copia a Landing Page principal
           cp index.html deploy/
           # Copia a versão HTML/JS
           cp -r html-version/ deploy/
           # Copia os arquivos compilados do Flutter
           cp -r flutter-version/build/web/* deploy/flutter-version/
+          # Copia os arquivos da versão Python para download/visualização
+          cp interface_streamlit.py deploy/python-version/
+          cp requirements.txt deploy/python-version/
+          cp README.md deploy/python-version/
 
       # 5. Envia tudo para a branch 'gh-pages' que o GitHub usa para o site
       - name: Deploy to GitHub Pages

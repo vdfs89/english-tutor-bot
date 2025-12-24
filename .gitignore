@@ -1,5 +1,28 @@
+# Configurações e Segredos
 .env
 .venv/
+
+# Python Bytecode e Cache
 __pycache__/
 *.pyc
-.exemplo_groq.py
+
+# Flutter (Arquivos gerados)
+flutter-version/build/
+flutter-version/.dart_tool/
+flutter-version/.packages
+flutter-version/.pub/
+
+# IDEs e Sistema Operacional
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Pastas de Deploy (Geradas pelo GitHub Actions)
+deploy/
+_site/
+
+# Arquivos de Mídia e Temporários
+*.mp3
+*.wav
+exemplos/

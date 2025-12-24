@@ -1,37 +1,48 @@
-# 🤖 English Tutor Bot
+# 🌊 LinguaFlow
 
-[Português](#descrição-pt) | [English](#description-en)
+## 🇬🇧 Description
 
----
+**LinguaFlow** is your 24/7 AI English Partner. 🚀 Unlock your fluency! Whether you're preparing for a job interview, a trip, or just want to improve your daily speaking skills, LinguaFlow is here to help in a judgment-free zone.
 
-## <a name="description-en"></a> 🇬🇧 Description
-**Your 24/7 AI English Partner.** 🚀 
-Unlock your fluency with English Tutor Bot! Whether you're preparing for a job interview, a trip, or just want to improve your daily speaking skills, this bot is here to help in a judgment-free zone.
+### ✨ Key Features
 
-### ✨ Key Features:
-* **Real-time Corrections:** Polishes your grammar and vocabulary as you chat.
-* **Natural Conversations:** Practice any topic to build confidence.
-* **Personalized Learning:** Adapts to your level, from beginner to advanced.
+*   **AI Tutor:** Conversational practice with a friendly AI.
+*   **Real-time Corrections:** Instant feedback on grammar and vocabulary.
+*   **Voice Interaction:** Practice speaking and listening (Speech-to-Text & Text-to-Speech).
+*   **Personalized Learning:** Adapts to your conversation level.
 
----
+## 🇧🇷 Descrição
 
-## <a name="descrição-pt"></a> 🇧🇷 Descrição
-**Seu parceiro de IA para fluência em inglês 24/7.** 🚀 
-Alcance a fluência com o English Tutor Bot! Esteja você se preparando para uma entrevista de emprego, uma viagem ou apenas queira melhorar sua fala no dia a dia, este bot está aqui para ajudar em um ambiente livre de julgamentos.
+**LinguaFlow** é seu parceiro de IA para fluência em inglês 24/7. 🚀 Destrave sua fluência! Seja para uma entrevista de emprego, viagem ou apenas para melhorar suas habilidades diárias, o LinguaFlow está aqui para ajudar em um ambiente livre de julgamentos.
 
-### ✨ Principais Funcionalidades:
-* **Correções em tempo real:** Ajusta sua gramática e vocabulário enquanto você conversa.
-* **Conversas Naturais:** Pratique qualquer assunto para ganhar confiança.
-* **Aprendizado Personalizado:** Adapta-se ao seu nível, do iniciante ao avançado.
+### ✨ Principais Funcionalidades
 
----
+*   **Tutor IA:** Prática de conversação com uma IA amigável.
+*   **Correções em Tempo Real:** Feedback instantâneo sobre gramática e vocabulário.
+*   **Interação por Voz:** Pratique fala e escuta.
+*   **Aprendizado Personalizado:** Adapta-se ao nível da conversa.
 
 ## 🛠️ Technologies / Tecnologias
-* [Language/Framework: ex: Python, Flutter, React]
-* [AI Engine: ex: Google Gemini API]
-* [Hosting: GitHub Pages / Vercel]
+
+*   **Language:** Python
+*   **Framework:** Streamlit
+*   **AI Engine:** Groq API (Llama 3 & Whisper)
+*   **Orchestration:** LangChain
 
 ## 🚀 How to run / Como rodar
-1. Clone the repository / Clone o repositório:
-   ```bash
-   git clone [https://github.com/vdfs89/english-tutor-bot.git](https://github.com/vdfs89/english-tutor-bot.git)
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/vdfs89/english-tutor-bot.git
+    cd english-tutor-bot
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3.  **Run the app:**
+    ```bash
+    streamlit run interface_streamlit.py
+    ```
