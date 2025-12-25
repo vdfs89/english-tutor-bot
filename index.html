@@ -3,76 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinguaFlow - Escolha sua Versão</title>
+    <title>LinguaFlow - Aprenda Ingles com IA</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f9;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            flex-direction: column;
-        }
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 40px;
+            padding: 20px;
         }
         .container {
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .card {
+            width: 100%;
+            max-width: 900px;
             background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            text-align: center;
-            width: 250px;
-            transition: transform 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
         }
-        .card:hover {
-            transform: translateY(-10px);
-        }
-        .card h2 {
-            color: #34495e;
-            margin-top: 0;
-        }
-        .card p {
-            color: #7f8c8d;
-            font-size: 0.9em;
-            flex-grow: 1;
-        }
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            margin-top: 20px;
-            text-decoration: none;
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            border-radius: 25px;
-            font-weight: bold;
-            transition: background-color 0.3s;
+            padding: 40px 30px;
+            text-align: center;
         }
-        .btn-flutter { background-color: #02569B; }
-        .btn-flutter:hover { background-color: #01447a; }
-        .btn-html { background-color: #E34F26; }
-        .btn-html:hover { background-color: #c7441e; }
-        .btn-python { background-color: #3776AB; }
-        .btn-python:hover { background-color: #2a5b84; }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        .content { padding: 40px 30px; }
+        .intro {
+            font-size: 1.1em;
+            color: #333;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            text-align: center;
+        }
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 18px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 2px solid #f0f0f0;
+        }
+        .feature {
+            text-align: center;
+            padding: 20px;
+        }
+        .feature-icon { font-size: 2.5em; margin-bottom: 15px; }
+        .feature h3 { color: #333; margin-bottom: 10px; }
+        .feature p { color: #666; font-size: 0.95em; line-height: 1.5; }
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+        .footer a { color: #667eea; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+        @media (max-width: 600px) {
+            .header h1 { font-size: 1.8em; }
+            .content { padding: 20px; }
+            .features { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
-    <h1>🌊 Bem-vindo ao LinguaFlow</h1>
     <div class="container">
-        <div class="card"><h2>Flutter App</h2><p>Experiência completa e interativa (Web App).</p><a href="flutter-version/" class="btn btn-flutter">Abrir Flutter</a></div>
-        <div class="card"><h2>Versão HTML</h2><p>Versão leve baseada em HTML5 e JavaScript.</p><a href="html-version/" class="btn btn-html">Abrir HTML</a></div>
-        <div class="card"><h2>Versão Python</h2><p>Código fonte Streamlit (Requer instalação local).</p><a href="python-version/interface_streamlit.py" class="btn btn-python">Ver Código</a><br><a href="python-version/README.md" style="font-size:0.8em; color:#3776AB; text-decoration:none; margin-top:5px; display:block;">Ler Instruções</a></div>
+        <div class="header">
+            <h1>LinguaFlow</h1>
+            <p>Seu parceiro de IA para fluencia em ingles 24/7</p>
+            <span class="badge">Conversacao - Correcoes - Voz</span>
+        </div>
+        <div class="content">
+            <p class="intro">
+                Pratique ingles com um tutor IA inteligente que oferece correcoes em tempo real, feedback sobre pronuncia e aprendizado personalizado.
+            </p>
+            <div style="text-align: center; margin: 30px 0;">
+                <button class="cta-button" onclick="window.location.href='https://linguaflow.streamlit.app/'">
+                    Comece a Praticar Agora!
+                </button>
+                <p style="text-align: center; color: #666; font-size: 0.95em; margin-top: 15px;">
+                    Clique acima para acessar a aplicacao completa no Streamlit
+                </p>
+            </div>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">AI</div>
+                    <h3>Tutor IA Avancado</h3>
+                    <p>Conversas naturais com inteligencia artificial (Groq API)</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">OK</div>
+                    <h3>Correcoes em Tempo Real</h3>
+                    <p>Feedback instantaneo sobre gramatica e vocabulario</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">VOZ</div>
+                    <h3>Pratica de Voz</h3>
+                    <p>Use seu microfone para praticar conversacao falada</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">LIVRO</div>
+                    <h3>Aprendizado Personalizado</h3>
+                    <p>Adaptacao automatica ao seu nivel de fluencia</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">MUNDO</div>
+                    <h3>Acesso 24/7</h3>
+                    <p>Pratique quando quiser, de qualquer lugar</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">RAIO</div>
+                    <h3>Rapido e Responsivo</h3>
+                    <p>Respostas instantaneas do modelo de IA mais rapido</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <p>LinguaFlow - Projeto Open Source - <a href="https://github.com/vdfs89/english-tutor-bot">GitHub</a></p>
+            <p style="margin-top: 10px; font-size: 0.85em;">Feito com AMOR para aprendizes de ingles</p>
+        </div>
     </div>
 </body>
 </html>
