@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from groq import Groq
+from groq import Groq, RateLimitError
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 
@@ -24,12 +24,16 @@ print("--- Passo 1: Transcrevendo Áudio com Whisper (Groq) ---")
 # 3. Transcrição usando cliente nativo Groq
 client = Groq(api_key=api_key)
 
-with open(arquivo_audio, "rb") as file:
-    transcription = client.audio.transcriptions.create(
-        file=(arquivo_audio, file.read()),
-        model="whisper-large-v3",
-        language="pt"
-    )
+try:
+    with open(arquivo_audio, "rb") as file:
+        transcription = client.audio.transcriptions.create(
+            file=(arquivo_audio, file.read()),
+            model="whisper-large-v3",
+            language="pt"
+        )
+except RateLimitError:
+    print("Erro: Limite de requisições da API Groq atingido (Rate Limit). Tente novamente mais tarde.")
+    exit()
 
 texto_transcrito = transcription.text
 print(f"Texto original detectado ({len(texto_transcrito)} caracteres).")
@@ -39,7 +43,7 @@ print("\n--- Passo 2: Gerando Resumo com Llama 3 (LangChain) ---")
 # 4. Configuração do LangChain com Llama 3
 chat = ChatGroq(
     temperature=0,
-    model_name="llama3-8b-8192"
+    model="llama-3.3-70b-versatile"
 )
 
 prompt = ChatPromptTemplate.from_messages([
@@ -50,7 +54,17 @@ prompt = ChatPromptTemplate.from_messages([
 chain = prompt | chat
 
 # 5. Execução da chain passando o texto transcrito
-resposta = chain.invoke({"texto": texto_transcrito})
+try:
+    resposta = chain.invoke({"texto": texto_transcrito})
+    print("\nResumo Gerado:")
+    print(resposta.content)
 
-print("\nResumo Gerado:")
-print(resposta.content)
+    # Salva o resumo em um arquivo de texto
+    arquivo_saida = "resumo_gerado.txt"
+    with open(arquivo_saida, "w", encoding="utf-8") as f:
+        f.write(str(resposta.content))
+    print(f"\nResumo salvo com sucesso em '{arquivo_saida}'")
+except RateLimitError:
+    print("Erro: Limite de requisições da API Groq atingido durante o resumo.")
+except Exception as e:
+    print(f"Ocorreu um erro inesperado: {e}")

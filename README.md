@@ -1,15 +1,19 @@
 # 🌊 LinguaFlow
 
+[!GitHub Pages](https://vdfs89.github.io/english-tutor-bot)
+[!Streamlit App](https://linguaflow.streamlit.app/)
+[!License: MIT](LICENSE)
+
 ## 🇬🇧 Description
 
 **LinguaFlow** is your 24/7 AI English Partner. 🚀 Unlock your fluency! Whether you're preparing for a job interview, a trip, or just want to improve your daily speaking skills, LinguaFlow is here to help in a judgment-free zone.
 
 ### ✨ Key Features
 
-*   **AI Tutor:** Conversational practice with a friendly AI.
-*   **Real-time Corrections:** Instant feedback on grammar and vocabulary.
-*   **Voice Interaction:** Practice speaking and listening (Speech-to-Text & Text-to-Speech).
-*   **Personalized Learning:** Adapts to your conversation level.
+* **AI Tutor:** Conversational practice with a friendly AI.
+* **Real-time Corrections:** Instant feedback on grammar and vocabulary.
+* **Voice Interaction:** Practice speaking and listening (Speech-to-Text & Text-to-Speech).
+* **Personalized Learning:** Adapts to your conversation level.
 
 ## 🇧🇷 Descrição
 
@@ -17,32 +21,51 @@
 
 ### ✨ Principais Funcionalidades
 
-*   **Tutor IA:** Prática de conversação com uma IA amigável.
-*   **Correções em Tempo Real:** Feedback instantâneo sobre gramática e vocabulário.
-*   **Interação por Voz:** Pratique fala e escuta.
-*   **Aprendizado Personalizado:** Adapta-se ao nível da conversa.
+* **Tutor IA:** Prática de conversação com uma IA amigável.
+* **Correções em Tempo Real:** Feedback instantâneo sobre gramática e vocabulário.
+* **Interação por Voz:** Pratique fala e escuta.
+* **Aprendizado Personalizado:** Adapta-se ao nível da conversa.
 
 ## 🛠️ Technologies / Tecnologias
 
-*   **Language:** Python
-*   **Framework:** Streamlit
-*   **AI Engine:** Groq API (Llama 3 & Whisper)
-*   **Orchestration:** LangChain
+* **Language:** Python
+* **Framework:** Streamlit
+* **AI Engine:** Groq API (Llama 3 & Whisper)
+* **Orchestration:** LangChain
+
+## 📁 Project Structure
+
+```text
+english-tutor-bot/
+├── web/                  # Landing page & HTML version
+│   ├── index.html
+│   └── css/
+├── backend/              # Python Logic
+│   ├── app/              # Main Streamlit Application
+│   ├── examples/         # Python Scripts & Demos
+│   └── .env.example
+├── docs/                 # Documentation (Setup, API, Architecture)
+├── .github/workflows/    # CI/CD Pipelines
+└── README.md
+```
 
 ## 🚀 How to run / Como rodar
 
-1.  **Clone the repository:**
+1. **Clone the repository:**
+
     ```bash
     git clone https://github.com/vdfs89/english-tutor-bot.git
     cd english-tutor-bot
     ```
 
-2.  **Install dependencies:**
+2. **Install dependencies:**
+
     ```bash
-    pip install -r requirements.txt
+    pip install -r backend/requirements.txt
     ```
 
-3.  **Run the app:**
+3. **Run the app:**
+
     ```bash
-    streamlit run interface_streamlit.py
+    streamlit run backend/app/interface_streamlit.py
     ```

@@ -1,0 +1,12 @@
+{
+  "include": [
+    "."
+  ],
+  "exclude": [
+    "**/__pycache__",
+    ".venv",
+    "flutter-version"
+  ],
+  "reportMissingTypeStubs": false,
+  "reportMissingImports": "warning"
+}

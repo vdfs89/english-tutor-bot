@@ -24,31 +24,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # --- INÍCIO DO PASSO FLUTTER ---
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-
-      - name: Build Flutter Web
-        run: |
-          cd flutter-version
-          flutter pub get
-          flutter build web --release --base-href "/english-tutor-bot/flutter-version/"
-      # --- FIM DO PASSO FLUTTER ---
-
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Create Deployment Structure
+      - name: Create site structure
         run: |
-          mkdir -p _site/flutter-version
-          # Copia o menu principal (Landing Page) para a raiz
-          cp index.html _site/
-          # Copia a versão leve em HTML/JS
-          cp -r html-version/* _site/html-version/ || cp -r html-version _site/
-          # Copia os arquivos gerados pelo Flutter para a subpasta correta
-          cp -r flutter-version/build/web/* _site/flutter-version/
+          mkdir -p _site
+          # Copia o conteúdo da pasta web para o site
+          cp -r web/* _site/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

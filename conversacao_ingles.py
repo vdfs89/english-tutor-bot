@@ -1,9 +1,9 @@
 import os
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
-from gtts import gTTS
-import pygame
-import speech_recognition as sr
+from gtts import gTTS  # type: ignore
+import pygame  # type: ignore
+import speech_recognition as sr  # type: ignore
 from groq import Groq
 
 # 1. Carrega variáveis de ambiente
@@ -58,7 +58,7 @@ def ouvir_microfone():
 # Usamos temperature=0.6 para ele ser um pouco mais natural/criativo na conversa
 chat = ChatGroq(
     temperature=0.6,
-    model_name="llama3-8b-8192"
+    model="llama-3.3-70b-versatile"
 )
 
 # 3. Define o histórico inicial com a "persona"
@@ -70,25 +70,31 @@ mensagens = [
 ]
 
 print("--- English Conversation Partner (Type 'sair' to exit) ---")
+print("🌐 Web Version: https://linguaflow.streamlit.app/")
 print("AI: Hello! I'm ready to help you practice your English. Speak to me!")
 
 # 4. Loop de conversação
 while True:
-    user_input = ouvir_microfone()
-    
-    if not user_input:
-        continue
+    try:
+        user_input = ouvir_microfone()
         
-    print(f"You: {user_input}")
-    
-    if user_input.lower() in ["quit", "exit", "sair"]:
-        print("AI: Goodbye! Keep practicing!")
-        break
+        if not user_input:
+            continue
+            
+        print(f"You: {user_input}")
         
-    mensagens.append(("human", user_input))
-    
-    resposta = chat.invoke(mensagens)
-    print(f"AI: {resposta.content}")
-    
-    mensagens.append(("ai", resposta.content))
-    falar_texto(resposta.content)
+        if user_input.lower() in ["quit", "exit", "sair"]:
+            print("AI: Goodbye! Keep practicing!")
+            break
+            
+        mensagens.append(("human", user_input))
+        
+        resposta = chat.invoke(mensagens)
+        print(f"AI: {resposta.content}")
+        
+        mensagens.append(("ai", str(resposta.content)))
+        falar_texto(str(resposta.content))
+
+    except Exception as e:
+        print(f"\n⚠️ Ocorreu um erro (possivelmente na API): {e}")
+        print("Reiniciando o ciclo de escuta...\n")

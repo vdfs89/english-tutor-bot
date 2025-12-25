@@ -1,0 +1,283 @@
+import streamlit as st
+import os
+from dotenv import load_dotenv
+from langchain_groq import ChatGroq
+import streamlit.components.v1 as components
+from gtts import gTTS  # type: ignore
+from streamlit_mic_recorder import mic_recorder  # type: ignore
+from groq import Groq
+import tempfile
+
+# Configuração da Página
+st.set_page_config(page_title="LinguaFlow AI", page_icon="🌊", layout="wide")
+
+# --- Autenticação Simples ---
+def check_password():
+    """Retorna `True` se o usuário digitou a senha correta."""
+
+    def password_entered():
+        """Verifica se a senha digitada está correta."""
+        if st.session_state["password"] == st.secrets["APP_PASSWORD"]:
+            st.session_state["password_correct"] = True
+            del st.session_state["password"]  # Não armazena a senha
+        else:
+            st.session_state["password_correct"] = False
+
+    # Se não houver senha configurada nos secrets, libera o acesso (útil para dev local)
+    if "APP_PASSWORD" not in st.secrets:
+        return True
+
+    if "password_correct" not in st.session_state:
+        st.text_input("Password", type="password", on_change=password_entered, key="password")
+        return False
+    elif not st.session_state["password_correct"]:
+        st.text_input("Password", type="password", on_change=password_entered, key="password")
+        st.error("😕 Password incorrect")
+        return False
+    else:
+        return True
+
+if not check_password():
+    st.stop()
+# ---------------------------
+
+st.title("🌊 LinguaFlow - Your AI English Partner")
+
+# 1. Carrega variáveis de ambiente
+load_dotenv()
+
+# Garante que a chave da API esteja disponível nas variáveis de ambiente (para Streamlit Cloud)
+if "GROQ_API_KEY" in st.secrets:
+    os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
+
+if not os.getenv("GROQ_API_KEY"):
+    st.error("Erro: GROQ_API_KEY não encontrada. Verifique o arquivo .env ou os Secrets do Streamlit.")
+    st.stop()
+
+# 2. Inicializa o estado da sessão (Histórico e Modelo)
+if "messages" not in st.session_state:
+    st.session_state.messages = [
+        ("system", "You are a friendly English tutor. Your goal is to help the user practice English conversation. "
+                   "Speak only in English. If the user makes a grammatical error, gently correct them inside your response, "
+                   "but keep the conversation flowing naturally.")
+    ]
+
+if "chat" not in st.session_state:
+    st.session_state.chat = ChatGroq(
+        temperature=0.6,
+        model="llama-3.3-70b-versatile"
+    )
+
+if "last_audio" not in st.session_state:
+    st.session_state.last_audio = (None, None)
+
+# Função para analisar o sentimento e retornar um emoji
+def analisar_sentimento(texto: str):
+    try:
+        # Usa o modelo para classificar a emoção rapidamente
+        chat_analyzer = ChatGroq(temperature=0, model="llama-3.3-70b-versatile")
+        messages = [
+            ("system", "Analyze the sentiment of the text. Return ONLY one emoji (e.g., 😀, 😐, 😞, 😠, 😮) that best represents the emotion. Do not output any text."),
+            ("human", texto)
+        ]
+        response = chat_analyzer.invoke(messages)
+        return str(response.content).strip()
+    except:
+        return "😐"
+
+# Função para processar a resposta da IA e gerar áudio
+def processar_resposta(user_text: str):
+    # Analisa sentimento e exibe notificação
+    emoji = analisar_sentimento(user_text)
+    st.toast(f"Sentiment detected: {emoji}")
+
+    # Adiciona mensagem do usuário ao histórico
+    st.session_state.messages.append(("human", user_text))
+    
+    # Gera resposta da IA
+    resposta = st.session_state.chat.invoke(st.session_state.messages)
+    st.session_state.messages.append(("ai", str(resposta.content)))
+    
+    return str(resposta.content)
+
+def visualizador_voz_real():
+    # HTML e JavaScript para processar o áudio no browser do utilizador
+    component_code = """
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: #0e1117; padding: 20px; border-radius: 15px; border: 1px solid #30363d;">
+        <canvas id="canvas" style="width: 100%; height: 150px;"></canvas>
+        <p id="status" style="color: #8b949e; font-family: sans-serif; margin-top: 10px; font-size: 14px;">A escutar microfone...</p>
+    </div>
+
+    <script>
+    async function startVisualizer() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const analyser = audioContext.createAnalyser();
+            const source = audioContext.createMediaStreamSource(stream);
+            
+            source.connect(analyser);
+            analyser.fftSize = 256; // Define a resolução (mais alto = mais barras)
+            
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+
+            function draw() {
+                requestAnimationFrame(draw);
+                analyser.getByteFrequencyData(dataArray);
+
+                // Limpar o canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                const barWidth = (canvas.width / bufferLength) * 2.5;
+                let barHeight;
+                let x = 0;
+
+                for (let i = 0; i < bufferLength; i++) {
+                    barHeight = dataArray[i]; // Aqui é onde a altura da voz define a altura da barra
+
+                    // Criar um gradiente de cor para ficar mais bonito
+                    const gradient = ctx.createLinearGradient(0, canvas.height, 0, 0);
+                    gradient.addColorStop(0, '#00f2fe'); // Ciano Neon
+                    gradient.addColorStop(1, '#4facfe'); // Azul Elétrico
+
+                    ctx.fillStyle = gradient;
+                    
+                    // Desenha a barra (centralizada verticalmente ou de baixo para cima)
+                    // Para reagir à "altura", usamos o valor de barHeight
+                    ctx.fillRect(x, canvas.height - barHeight / 1.5, barWidth, barHeight / 1.5);
+
+                    x += barWidth + 2;
+                }
+            }
+            draw();
+            document.getElementById('status').innerText = "Voz detectada em tempo real!";
+        } catch (err) {
+            document.getElementById('status').innerText = "Erro: Acesso ao microfone negado.";
+            console.error(err);
+        }
+    }
+
+    startVisualizer();
+    </script>
+    """
+    components.html(component_code, height=220)
+
+# 4. Área de Entrada de Voz (Movido para o topo da página principal)
+st.write("### Voice Input")
+
+show_visualizer = st.toggle("Show Audio Visualizer", value=True)
+if show_visualizer:
+    visualizador_voz_real()
+
+# Componente de gravação compatível com navegadores web
+try:
+    audio = mic_recorder(
+        start_prompt="🎤 Speak Now",
+        stop_prompt="⏹ Stop",
+        key='recorder'
+    )
+except Exception as e:
+    st.error("⚠️ Erro ao inicializar o microfone. Verifique as permissões do navegador.")
+    audio = None
+
+if audio:
+    with st.spinner("Transcribing..."):
+        try:
+            # Salva o áudio (bytes) em um arquivo temporário
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+                tmp.write(audio['bytes'])  # type: ignore
+                tmp_filename = tmp.name
+            
+            # Transcreve usando Groq
+            client = Groq()
+            with open(tmp_filename, "rb") as file:
+                transcription = client.audio.transcriptions.create(
+                    file=(tmp_filename, file.read()),
+                    model="whisper-large-v3",
+                    language="en"
+                )
+            os.remove(tmp_filename)
+            
+            if transcription.text:
+                processar_resposta(transcription.text)
+                st.rerun()
+                
+        except Exception as e:
+            st.error(f"Error processing audio: {e}")
+
+# Barra lateral com ferramentas de estudo
+with st.sidebar:
+    st.header("Settings")
+    voice_accent = st.selectbox(
+        "Voice Accent",
+        ["American", "British", "Australian"]
+    )
+    # Mapeia a escolha para o domínio correspondente do Google (TLD)
+    accent_tld = {"American": "com", "British": "co.uk", "Australian": "com.au"}[voice_accent]
+    
+    audio_speed = st.radio("Audio Speed", ["Normal", "Slow"], horizontal=True)
+    is_slow = (audio_speed == "Slow")
+    
+    st.markdown("---")
+    st.header("Study Tools")
+    if st.button("📅 Generate Weekly Plan"):
+        processar_resposta("Based on our conversation so far, please create a personalized weekly study plan for me. Identify my weak points and interests from our chat, and suggest specific activities for each day of the week (Monday to Sunday) to improve my English. For each day, recommend a specific YouTube video topic or search query.")
+        st.rerun()
+
+    if st.button("📺 Recommend YouTube Videos"):
+        processar_resposta("Based on our recent topics and my mistakes, please recommend 3 specific YouTube videos or channels that would help me improve. For each recommendation, explain why it's useful for me.")
+        st.rerun()
+
+    st.markdown("---")
+    st.markdown("### 🔗 Links")
+    st.markdown("Open Live App 🚀")
+
+# 3. Exibe o histórico de chat
+for role, content in st.session_state.messages:
+    if role == "system":
+        continue
+    with st.chat_message(role):
+        st.write(content)
+        # Se for a última mensagem e for da IA, gera o áudio (opcional: apenas para a última)
+        if role == "ai" and content == st.session_state.messages[-1][1]:
+            audio_bytes = None
+            should_autoplay = False
+            cache_key = (content, accent_tld, is_slow)
+
+            if st.session_state.last_audio[0] == cache_key:
+                audio_bytes = st.session_state.last_audio[1]
+            else:
+                with st.spinner("Generating audio..."):
+                    try:
+                        tts = gTTS(text=content, lang='en', tld=accent_tld, slow=is_slow)
+                        # Cria o arquivo temporário e fecha imediatamente para evitar conflito no Windows
+                        with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as tmp:
+                            tmp_filename = tmp.name
+                        
+                        tts.save(tmp_filename)  # type: ignore
+                        with open(tmp_filename, "rb") as f:
+                            audio_bytes = f.read()
+                        
+                        st.session_state.last_audio = (cache_key, audio_bytes)
+                        should_autoplay = True
+                        os.remove(tmp_filename)
+                    except Exception as e:
+                        st.error(f"Erro no áudio: {e}")
+            
+            if audio_bytes:
+                st.audio(audio_bytes, format="audio/mp3", autoplay=should_autoplay)
+                
+                st.download_button(
+                    label="⬇️ Download Audio",
+                    data=audio_bytes,
+                    file_name="linguaflow_audio.mp3",
+                    mime="audio/mp3"
+                )
+
+if user_input := st.chat_input("Type your message here..."):
+    processar_resposta(user_input)
+    st.rerun()

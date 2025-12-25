@@ -1,16 +1,22 @@
 # Configurações e Segredos
 .env
 .venv/
+venv/
 
 # Python Bytecode e Cache
 __pycache__/
 *.pyc
+.ipynb_checkpoints
+.pytest_cache/
+.DS_Store
 
 # Flutter (Arquivos gerados)
-flutter-version/build/
-flutter-version/.dart_tool/
-flutter-version/.packages
-flutter-version/.pub/
+build/
+.dart_tool/
+.packages
+.pub/
+.flutter-plugins
+.flutter-plugins-dependencies
 
 # IDEs e Sistema Operacional
 .vscode/

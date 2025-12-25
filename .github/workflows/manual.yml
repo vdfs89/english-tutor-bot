@@ -37,6 +37,9 @@ jobs:
           mkdir -p deploy/python-version
           # Copia a Landing Page principal
           cp index.html deploy/
+          cp robots.txt deploy/
+          cp sitemap.xml deploy/
+          cp privacy-policy.html deploy/
           # Copia a versão HTML/JS
           cp -r html-version/ deploy/
           # Copia os arquivos compilados do Flutter

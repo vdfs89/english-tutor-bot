@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Ajuste o base href conforme necessário para o GitHub Pages -->
+  <base href="/english-tutor-bot/">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <title>LinguaFlow Flutter</title>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <h1>LinguaFlow - English Tutor AI</h1>
+  <p>Web version coming soon. Check out our <a href="https://github.com/vdfs89/english-tutor-bot">GitHub Repository</a>.</p>
+</body>
+</html>
