@@ -1,28 +1,91 @@
 # Configurações e Segredos
 .env
+.env.local
+.env.*.local
 .venv/
+venv/
+env/
+ENV/
 
 # Python Bytecode e Cache
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+PIPFILE.lock
 
-# Flutter (Arquivos gerados)
-flutter-version/build/
-flutter-version/.dart_tool/
-flutter-version/.packages
-flutter-version/.pub/
-
-# IDEs e Sistema Operacional
+# IDEs e Sistemas Operacional
 .vscode/
 .idea/
+.idies/
 .DS_Store
 Thumbs.db
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# Ferramentas de Linting
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.ruff_cache/
+
+# Streamlit
+.streamlit/
+.streamlit/secrets.toml
+.streamlit/config.toml
+
+# Pytest e Testes
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
 
 # Pastas de Deploy (Geradas pelo GitHub Actions)
 deploy/
 _site/
+out/
+dist/
+build/
 
 # Arquivos de Mídia e Temporários
 *.mp3
 *.wav
+*.mp4
+*.mov
+*.mkv
+*.wav
+*.m4a
+*.log
+*.tmp
+*.temp
 exemplos/
+
+# Arquivo específico de exemplo
+example_groq.py
+example_completo_audio_resumo.py
+conversacao_ingles.py
+interface_streamlit.py
