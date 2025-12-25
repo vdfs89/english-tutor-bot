@@ -1,0 +1,71 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "english-tutor-bot"
+version = "0.1.0"
+description = "AI-powered English tutor using Streamlit and advanced LLMs"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Vitor Diogo Fonseca da Silva", email = "vdfs89@example.com"}
+]
+keywords = ["english", "tutor", "ai", "streamlit", "groq", "llm"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+
+[project.urls]
+Homepage = "https://github.com/vdfs89/english-tutor-bot"
+Documentation = "https://github.com/vdfs89/english-tutor-bot/wiki"
+Repository = "https://github.com/vdfs89/english-tutor-bot.git"
+Issues = "https://github.com/vdfs89/english-tutor-bot/issues"
+
+[tool.setuptools]
+packages = ["backend"]
+
+[tool.black]
+line-length = 100
+target-version = ["py38", "py39", "py310", "py311"]
+include = '\\.pyi?$'
+extend-exclude = '''\n/(
+  # directories
+  \.eggs
+  | \.git
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 100
+known_first_party = "backend"
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+
+[tool.pylint.messages_control]
+disable = ["C0330", "C0326"]
