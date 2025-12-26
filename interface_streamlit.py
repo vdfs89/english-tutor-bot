@@ -33,7 +33,7 @@ if "messages" not in st.session_state:
 if "chat" not in st.session_state:
     st.session_state.chat = ChatGroq(
         temperature=0.6,
-        model_name="llama3-8b-8192"
+        model_name="llama-3.1-8b-instant"
     )
 
 # Função para processar a resposta da IA e gerar áudio
