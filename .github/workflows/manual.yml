@@ -3,12 +3,16 @@ name: Build and Deploy English Tutor Bot
 on:
   push:
     branches:
+<<<<<<< HEAD
       - main  # O deploy acontece toda vez que você der push para a main
       - staging
     paths:
       - 'lingua_flow_app/**'
       - '.github/workflows/manual.yml'
       - '!**.md'
+=======
+      - main # O deploy acontece toda vez que você der push para a main
+>>>>>>> 145d04dfb357ec512063850642252afc1d1bfab3
 
 permissions:
   contents: write
@@ -22,6 +26,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+<<<<<<< HEAD
       # 2. Instala o Flutter no servidor do GitHub
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -78,10 +83,18 @@ jobs:
           cp interface_streamlit.py deploy/python-version/
           cp requirements.txt deploy/python-version/
           cp README.md deploy/python-version/
+=======
+      # 2. Prepara os arquivos gerados para o deploy final
+      - name: Prepare Deployment Folder
+        run: |
+          mkdir -p deploy
+          # Se você gerar arquivos estáticos, copie aqui
+          # cp -r build/* deploy/ (exemplo)
+>>>>>>> 145d04dfb357ec512063850642252afc1d1bfab3
 
-      # 5. Envia tudo para a branch 'gh-pages' que o GitHub usa para o site
+      # 3. Envia tudo para a branch 'gh-pages' que o GitHub usa para o site
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: deploy
-          branch: gh-pages # O site ficará nesta branch
+          branch: gh-pages
