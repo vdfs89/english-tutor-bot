@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main  # O deploy acontece toda vez que você der push para a main
+      - staging
+    paths:
+      - 'lingua_flow_app/**'
+      - '.github/workflows/manual.yml'
+      - '!**.md'
 
 permissions:
   contents: write
@@ -22,18 +27,35 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+          cache: true
+
+      # Cache das dependências do Flutter (Pub Cache) para acelerar o build
+      - name: Cache Pub Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('lingua_flow_app/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-
 
       # 3. Resolve as dependências e constrói a versão Web do Flutter
       - name: Build Flutter Web
         run: |
-          cd flutter-version
+          cd lingua_flow_app
           flutter pub get
-          flutter build web --release --base-href "/english-tutor-bot/flutter-version/"
+          
+          # Determine base-href based on branch
+          if [[ "${{ github.ref_name }}" == "staging" ]]; then
+            BASE_HREF="/english-tutor-bot/staging/"
+          else
+            BASE_HREF="/english-tutor-bot/flutter-version/"
+          fi
+          
+          flutter build web --release --base-href "$BASE_HREF"
 
       # 4. Organiza os arquivos para o deploy final
       - name: Prepare Deployment Folder
         run: |
-          mkdir -p deploy/flutter-version
           mkdir -p deploy/python-version
           # Copia a Landing Page principal
           cp index.html deploy/
@@ -42,8 +64,16 @@ jobs:
           cp privacy-policy.html deploy/
           # Copia a versão HTML/JS
           cp -r html-version/ deploy/
+          
+          # Determine destination folder based on branch
+          if [[ "${{ github.ref_name }}" == "staging" ]]; then
+            FLUTTER_DEST="deploy/staging"
+          else
+            FLUTTER_DEST="deploy/flutter-version"
+          fi
+          mkdir -p "$FLUTTER_DEST"
           # Copia os arquivos compilados do Flutter
-          cp -r flutter-version/build/web/* deploy/flutter-version/
+          cp -r lingua_flow_app/build/web/* "$FLUTTER_DEST/"
           # Copia os arquivos da versão Python para download/visualização
           cp interface_streamlit.py deploy/python-version/
           cp requirements.txt deploy/python-version/
