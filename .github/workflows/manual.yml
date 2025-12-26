@@ -3,7 +3,7 @@ name: Build and Deploy English Tutor Bot
 on:
   push:
     branches:
-      - main  # O deploy acontece toda vez que você der push para a main
+      - main # O deploy acontece toda vez que você der push para a main
 
 permissions:
   contents: write
@@ -17,36 +17,16 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # 2. Instala o Flutter no servidor do GitHub
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-
-      # 3. Resolve as dependências e constrói a versão Web do Flutter
-      - name: Build Flutter Web
-        run: |
-          flutter build web --release --base-href "/english-tutor-bot/flutter-version/"
-
-      # 4. Organiza os arquivos para o deploy final
+      # 2. Prepara os arquivos gerados para o deploy final
       - name: Prepare Deployment Folder
         run: |
-          mkdir -p deploy/flutter-version
-          mkdir -p deploy/python-version
-          # Copia a Landing Page principal
-          cp index.html deploy/
-          # Copia a versão HTML/JS
-          cp -r html-version/ deploy/
-          # Copia os arquivos compilados do Flutter
-          cp -r flutter-version/build/web/* deploy/flutter-version/
-          # Copia os arquivos da versão Python para download/visualização
-          cp interface_streamlit.py deploy/python-version/
-          cp requirements.txt deploy/python-version/
-          cp README.md deploy/python-version/
+          mkdir -p deploy
+          # Se você gerar arquivos estáticos, copie aqui
+          # cp -r build/* deploy/ (exemplo)
 
-      # 5. Envia tudo para a branch 'gh-pages' que o GitHub usa para o site
+      # 3. Envia tudo para a branch 'gh-pages' que o GitHub usa para o site
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: deploy
-          branch: gh-pages # O site ficará nesta branch
+          branch: gh-pages
