@@ -26,8 +26,6 @@ jobs:
       # 3. Resolve as dependências e constrói a versão Web do Flutter
       - name: Build Flutter Web
         run: |
-          cd flutter-version
-          flutter pub get
           flutter build web --release --base-href "/english-tutor-bot/flutter-version/"
 
       # 4. Organiza os arquivos para o deploy final
