@@ -1,0 +1,24 @@
+# LinguaFlow - English Tutor AI
+# API Dependencies (Render)
+
+# Web Framework
+fastapi>=0.104.1
+uvicorn[standard]>=0.24.0
+
+# Environment Variables
+python-dotenv>=1.0.0
+
+# AI/LLM
+pydantic>=2.10.0
+pydantic-settings>=2.1.0
+requests>=2.31.0
+
+# Database/Serialization
+python-multipart>=0.0.6
+
+# Utilities
+click>=8.1.7
+
+# IA MODELS - Gemini + Groq Fallback
+google-generativeai>=0.3.0
+groq>=0.9.0

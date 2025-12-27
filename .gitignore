@@ -62,9 +62,7 @@ dmypy.json
 .ruff_cache/
 
 # Streamlit
-.streamlit/
 .streamlit/secrets.toml
-.streamlit/config.toml
 
 # Pytest e Testes
 .pytest_cache/
