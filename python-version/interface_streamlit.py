@@ -69,15 +69,22 @@ difficulty_prompts = {
 
 roleplay_prompts = {
     "Default (Tutor)": "You are a friendly English tutor. Your goal is to help the user practice English conversation.",
-    "Waiter (Restaurant)": "You are a waiter at a restaurant. The user is a customer. Take their order, make recommendations, and simulate a dining experience.",
-    "Job Interviewer": "You are a hiring manager conducting a job interview. Ask standard interview questions and evaluate the user's responses professionally.",
+    "Waiter (Restaurant)": "You are a waiter at a restaurant. The user is a customer. "
+    "Take their order, make recommendations, and simulate a dining experience.",
+    "Job Interviewer": "You are a hiring manager conducting a job interview. "
+    "Ask standard interview questions and evaluate the user's responses professionally.",
     "Travel Agent": "You are a travel agent. Help the user plan a trip, discussing destinations, flights, and accommodation.",
     "Doctor": "You are a doctor. The user is a patient describing symptoms. Ask diagnostic questions and give medical advice.",
-    "Shop Assistant": "You are a sales assistant in a store. Help the user find products, discuss prices, and handle the purchase.",
-    "Immigration Officer": "You are an immigration officer at border control. Ask the user about their trip purpose, duration, and accommodation in a formal tone.",
-    "Hotel Receptionist": "You are a hotel receptionist. Check the user in, discuss room preferences, and explain hotel amenities.",
-    "Taxi Driver": "You are a chatty taxi driver. Make small talk about the city, weather, or traffic while driving the user to their destination.",
-    "Tech Support": "You are a tech support agent. Help the user troubleshoot a technical problem with their computer or internet.",
+    "Shop Assistant": "You are a sales assistant in a store. "
+    "Help the user find products, discuss prices, and handle the purchase.",
+    "Immigration Officer": "You are an immigration officer at border control. "
+    "Ask the user about their trip purpose, duration, and accommodation in a formal tone.",
+    "Hotel Receptionist": "You are a hotel receptionist. "
+    "Check the user in, discuss room preferences, and explain hotel amenities.",
+    "Taxi Driver": "You are a chatty taxi driver. "
+    "Make small talk about the city, weather, or traffic while driving the user to their destination.",
+    "Tech Support": "You are a tech support agent. "
+    "Help the user troubleshoot a technical problem with their computer or internet.",
 }
 
 system_prompt = (
@@ -127,7 +134,7 @@ st.write("### Voice Input")
 # Componente de gravação compatível com navegadores web
 try:
     audio = mic_recorder(start_prompt="🎤 Speak Now", stop_prompt="⏹ Stop", key="recorder")
-except Exception as e:
+except Exception:
     st.error("⚠️ Erro ao inicializar o microfone. Verifique as permissões do navegador.")
     audio = None
 
@@ -163,13 +170,16 @@ with st.sidebar:
     st.header("Study Tools")
     if st.button("📅 Generate Weekly Plan"):
         processar_resposta(
-            "Based on our conversation so far, please create a personalized weekly study plan for me. Identify my weak points and interests from our chat, and suggest specific activities for each day of the week (Monday to Sunday) to improve my English. For each day, recommend a specific YouTube video topic or search query."
+            "Based on our conversation so far, please create a personalized weekly study plan for me. "
+            "Identify my weak points and interests from our chat, and suggest specific activities for each day of the week "
+            "(Monday to Sunday) to improve my English. For each day, recommend a specific YouTube video topic or search query."
         )
         st.rerun()
 
     if st.button("💡 Suggest Topics"):
         processar_resposta(
-            f"I am currently at a {difficulty} level. Please suggest 3 interesting conversation topics suitable for my level that we could discuss right now. For each topic, provide a sample opening question to get us started."
+            f"I am currently at a {difficulty} level. Please suggest 3 interesting conversation topics suitable for my level "
+            "that we could discuss right now. For each topic, provide a sample opening question to get us started."
         )
         st.rerun()
 
@@ -179,7 +189,8 @@ with st.sidebar:
 
     if st.button("📺 Recommend YouTube Videos"):
         processar_resposta(
-            "Based on our recent topics and my mistakes, please recommend 3 specific YouTube videos or channels that would help me improve. For each recommendation, explain why it's useful for me."
+            "Based on our recent topics and my mistakes, please recommend 3 specific YouTube videos or channels "
+            "that would help me improve. For each recommendation, explain why it's useful for me."
         )
         st.rerun()
 
