@@ -40,7 +40,6 @@ PIPFILE.lock
 .pub/
 .flutter-plugins
 .flutter-plugins-dependencies
-
 # IDEs e Sistemas Operacional
 .vscode/
 .idea/
@@ -92,3 +91,8 @@ build/
 *.tmp
 *.temp
 exemplos/
+
+# Arquivo específico de exemplo
+example_groq.py
+example_completo_audio_resumo.py
+conversacao_ingles.py

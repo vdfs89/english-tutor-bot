@@ -10,18 +10,21 @@ Be respectful and professional in all interactions. We are committed to providin
 
 1. **Fork the repository** on GitHub
 2. **Clone your fork** to your local machine:
+
    ```bash
    git clone https://github.com/YOUR-USERNAME/english-tutor-bot.git
    cd english-tutor-bot
    ```
 
 3. **Create a virtual environment:**
+
    ```bash
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\\Scripts\\activate
    ```
 
 4. **Install dependencies:**
+
    ```bash
    pip install -r requirements.txt
    ```
@@ -29,6 +32,7 @@ Be respectful and professional in all interactions. We are committed to providin
 ## Development Workflow
 
 1. **Create a feature branch:**
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
@@ -36,18 +40,19 @@ Be respectful and professional in all interactions. We are committed to providin
 2. **Make your changes** following the code style guidelines below
 
 3. **Run tests and linting:**
+
    ```bash
-   flake8 backend/
-   black backend/
-   isort backend/
+   pre-commit run --all-files
    ```
 
 4. **Commit your changes** with clear messages:
+
    ```bash
    git commit -m "type: Brief description of changes"
    ```
 
 5. **Push to your fork:**
+
    ```bash
    git push origin feature/your-feature-name
    ```
@@ -66,6 +71,7 @@ Be respectful and professional in all interactions. We are committed to providin
 ## Commit Message Format
 
 Use conventional commits format:
+
 - `feat:` New features
 - `fix:` Bug fixes
 - `refactor:` Code refactoring
