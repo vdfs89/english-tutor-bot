@@ -1,8 +1,9 @@
 import os
+
 from dotenv import load_dotenv
 from groq import Groq, RateLimitError
-from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_groq import ChatGroq
 
 # 1. Carrega variáveis de ambiente
 load_dotenv()
@@ -27,12 +28,12 @@ client = Groq(api_key=api_key)
 try:
     with open(arquivo_audio, "rb") as file:
         transcription = client.audio.transcriptions.create(
-            file=(arquivo_audio, file.read()),
-            model="whisper-large-v3",
-            language="pt"
+            file=(arquivo_audio, file.read()), model="whisper-large-v3", language="pt"
         )
 except RateLimitError:
-    print("Erro: Limite de requisições da API Groq atingido (Rate Limit). Tente novamente mais tarde.")
+    print(
+        "Erro: Limite de requisições da API Groq atingido (Rate Limit). Tente novamente mais tarde."
+    )
     exit()
 
 texto_transcrito = transcription.text
@@ -41,15 +42,17 @@ print(f"Texto original detectado ({len(texto_transcrito)} caracteres).")
 print("\n--- Passo 2: Gerando Resumo com Llama 3 (LangChain) ---")
 
 # 4. Configuração do LangChain com Llama 3
-chat = ChatGroq(
-    temperature=0,
-    model="llama-3.3-70b-versatile"
-)
+chat = ChatGroq(temperature=0, model="llama-3.3-70b-versatile")
 
-prompt = ChatPromptTemplate.from_messages([
-    ("system", "Você é um assistente especialista em resumir textos. Crie um resumo conciso em tópicos (bullet points) do texto fornecido pelo usuário."),
-    ("human", "Texto para resumir:\n\n{texto}")
-])
+prompt = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            "Você é um assistente especialista em resumir textos. Crie um resumo conciso em tópicos (bullet points) do texto fornecido pelo usuário.",
+        ),
+        ("human", "Texto para resumir:\n\n{texto}"),
+    ]
+)
 
 chain = prompt | chat
 

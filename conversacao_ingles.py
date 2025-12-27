@@ -1,10 +1,11 @@
 import os
-from dotenv import load_dotenv
-from langchain_groq import ChatGroq
-from gtts import gTTS  # type: ignore
+
 import pygame  # type: ignore
 import speech_recognition as sr  # type: ignore
+from dotenv import load_dotenv
 from groq import Groq
+from gtts import gTTS  # type: ignore
+from langchain_groq import ChatGroq
 
 # 1. Carrega variáveis de ambiente
 load_dotenv()
@@ -16,9 +17,10 @@ if not os.getenv("GROQ_API_KEY"):
 # Inicializa o mixer do pygame para tocar áudio
 pygame.mixer.init()
 
+
 def falar_texto(texto):
     try:
-        tts = gTTS(text=texto, lang='en')
+        tts = gTTS(text=texto, lang="en")
         arquivo_temp = "temp_audio.mp3"
         tts.save(arquivo_temp)
         pygame.mixer.music.load(arquivo_temp)
@@ -30,6 +32,7 @@ def falar_texto(texto):
     except Exception as e:
         print(f"(Erro ao reproduzir áudio: {e})")
 
+
 def ouvir_microfone():
     r = sr.Recognizer()
     with sr.Microphone() as source:
@@ -39,34 +42,33 @@ def ouvir_microfone():
             audio = r.listen(source, timeout=5, phrase_time_limit=10)
         except sr.WaitTimeoutError:
             return ""
-            
+
     temp_wav = "temp_mic.wav"
     with open(temp_wav, "wb") as f:
         f.write(audio.get_wav_data())
-        
+
     client = Groq()
     with open(temp_wav, "rb") as file:
         transcription = client.audio.transcriptions.create(
-            file=(temp_wav, file.read()),
-            model="whisper-large-v3",
-            language="en"
+            file=(temp_wav, file.read()), model="whisper-large-v3", language="en"
         )
     os.remove(temp_wav)
     return transcription.text
 
+
 # 2. Configura o modelo
 # Usamos temperature=0.6 para ele ser um pouco mais natural/criativo na conversa
-chat = ChatGroq(
-    temperature=0.6,
-    model="llama-3.3-70b-versatile"
-)
+chat = ChatGroq(temperature=0.6, model="llama-3.3-70b-versatile")
 
 # 3. Define o histórico inicial com a "persona"
 # Instrução: Ser um tutor amigável, conversar em inglês e corrigir erros sutilmente.
 mensagens = [
-    ("system", "You are a friendly English tutor. Your goal is to help the user practice English conversation. "
-               "Speak only in English. If the user makes a grammatical error, gently correct them inside your response, "
-               "but keep the conversation flowing naturally.")
+    (
+        "system",
+        "You are a friendly English tutor. Your goal is to help the user practice English conversation. "
+        "Speak only in English. If the user makes a grammatical error, gently correct them inside your response, "
+        "but keep the conversation flowing naturally.",
+    )
 ]
 
 print("--- English Conversation Partner (Type 'sair' to exit) ---")
@@ -77,21 +79,21 @@ print("AI: Hello! I'm ready to help you practice your English. Speak to me!")
 while True:
     try:
         user_input = ouvir_microfone()
-        
+
         if not user_input:
             continue
-            
+
         print(f"You: {user_input}")
-        
+
         if user_input.lower() in ["quit", "exit", "sair"]:
             print("AI: Goodbye! Keep practicing!")
             break
-            
+
         mensagens.append(("human", user_input))
-        
+
         resposta = chat.invoke(mensagens)
         print(f"AI: {resposta.content}")
-        
+
         mensagens.append(("ai", str(resposta.content)))
         falar_texto(str(resposta.content))
 

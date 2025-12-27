@@ -9,7 +9,7 @@ Confiabilidade: 99.9% com redundancia automatica
 import io
 import logging
 import os
-from typing import Any, Dict, Optional
+from typing import Dict
 
 import google.generativeai as genai
 from dotenv import load_dotenv
@@ -32,8 +32,8 @@ if not GEMINI_API_KEY and not GROQ_API_KEY:
 
 # Configurar Gemini
 if GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
-    gemini_model = genai.GenerativeModel("gemini-pro")
+    genai.configure(api_key=GEMINI_API_KEY)  # type: ignore
+    gemini_model = genai.GenerativeModel("gemini-pro")  # type: ignore
 else:
     gemini_model = None
 
