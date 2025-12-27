@@ -80,6 +80,18 @@
       "languageVersion": "3.8"
     },
     {
+      "name": "http",
+      "rootUri": "file:///C:/Users/55419/AppData/Local/Pub/Cache/hosted/pub.dev/http-1.6.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "http_parser",
+      "rootUri": "file:///C:/Users/55419/AppData/Local/Pub/Cache/hosted/pub.dev/http_parser-4.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
       "name": "leak_tracker",
       "rootUri": "file:///C:/Users/55419/AppData/Local/Pub/Cache/hosted/pub.dev/leak_tracker-11.0.2",
       "packageUri": "lib/",
@@ -248,15 +260,15 @@
       "languageVersion": "3.4"
     },
     {
-      "name": "flutter_version",
+      "name": "lingua_flow_app",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     }
   ],
   "generator": "pub",
-  "generatorVersion": "3.10.3",
+  "generatorVersion": "3.10.4",
   "flutterRoot": "file:///D:/flutter",
-  "flutterVersion": "3.38.4",
+  "flutterVersion": "3.38.5",
   "pubCache": "file:///C:/Users/55419/AppData/Local/Pub/Cache"
 }

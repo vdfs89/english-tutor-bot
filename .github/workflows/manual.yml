@@ -3,16 +3,15 @@ name: Build and Deploy English Tutor Bot
 on:
   push:
     branches:
-<<<<<<< HEAD
       - main  # O deploy acontece toda vez que você der push para a main
       - staging
     paths:
       - 'lingua_flow_app/**'
       - '.github/workflows/manual.yml'
+      - 'index.html'
+      - 'html-version/**'
+      - 'interface_streamlit.py'
       - '!**.md'
-=======
-      - main # O deploy acontece toda vez que você der push para a main
->>>>>>> 145d04dfb357ec512063850642252afc1d1bfab3
 
 permissions:
   contents: write
@@ -26,7 +25,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-<<<<<<< HEAD
       # 2. Instala o Flutter no servidor do GitHub
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -48,14 +46,14 @@ jobs:
         run: |
           cd lingua_flow_app
           flutter pub get
-          
+
           # Determine base-href based on branch
           if [[ "${{ github.ref_name }}" == "staging" ]]; then
             BASE_HREF="/english-tutor-bot/staging/"
           else
             BASE_HREF="/english-tutor-bot/flutter-version/"
           fi
-          
+
           flutter build web --release --base-href "$BASE_HREF"
 
       # 4. Organiza os arquivos para o deploy final
@@ -69,7 +67,7 @@ jobs:
           cp privacy-policy.html deploy/
           # Copia a versão HTML/JS
           cp -r html-version/ deploy/
-          
+
           # Determine destination folder based on branch
           if [[ "${{ github.ref_name }}" == "staging" ]]; then
             FLUTTER_DEST="deploy/staging"
@@ -83,14 +81,6 @@ jobs:
           cp interface_streamlit.py deploy/python-version/
           cp requirements.txt deploy/python-version/
           cp README.md deploy/python-version/
-=======
-      # 2. Prepara os arquivos gerados para o deploy final
-      - name: Prepare Deployment Folder
-        run: |
-          mkdir -p deploy
-          # Se você gerar arquivos estáticos, copie aqui
-          # cp -r build/* deploy/ (exemplo)
->>>>>>> 145d04dfb357ec512063850642252afc1d1bfab3
 
       # 3. Envia tudo para a branch 'gh-pages' que o GitHub usa para o site
       - name: Deploy to GitHub Pages

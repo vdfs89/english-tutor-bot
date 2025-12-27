@@ -1,14 +1,15 @@
 {
   "roots": [
-    "flutter_version"
+    "lingua_flow_app"
   ],
   "packages": [
     {
-      "name": "flutter_version",
+      "name": "lingua_flow_app",
       "version": "1.0.0+1",
       "dependencies": [
         "cupertino_icons",
         "flutter",
+        "http",
         "record"
       ],
       "devDependencies": [
@@ -39,6 +40,16 @@
         "stream_channel",
         "test_api",
         "vector_math"
+      ]
+    },
+    {
+      "name": "http",
+      "version": "1.6.0",
+      "dependencies": [
+        "async",
+        "http_parser",
+        "meta",
+        "web"
       ]
     },
     {
@@ -162,6 +173,29 @@
       ]
     },
     {
+      "name": "web",
+      "version": "1.1.1",
+      "dependencies": []
+    },
+    {
+      "name": "http_parser",
+      "version": "4.1.2",
+      "dependencies": [
+        "collection",
+        "source_span",
+        "string_scanner",
+        "typed_data"
+      ]
+    },
+    {
+      "name": "async",
+      "version": "2.13.0",
+      "dependencies": [
+        "collection",
+        "meta"
+      ]
+    },
+    {
       "name": "record_darwin",
       "version": "1.2.2",
       "dependencies": [
@@ -238,14 +272,6 @@
       "dependencies": []
     },
     {
-      "name": "async",
-      "version": "2.13.0",
-      "dependencies": [
-        "collection",
-        "meta"
-      ]
-    },
-    {
       "name": "leak_tracker_testing",
       "version": "3.0.2",
       "dependencies": [
@@ -295,9 +321,11 @@
       ]
     },
     {
-      "name": "web",
-      "version": "1.1.1",
-      "dependencies": []
+      "name": "typed_data",
+      "version": "1.4.0",
+      "dependencies": [
+        "collection"
+      ]
     },
     {
       "name": "flutter_web_plugins",
@@ -329,13 +357,6 @@
       "name": "vm_service",
       "version": "15.0.2",
       "dependencies": []
-    },
-    {
-      "name": "typed_data",
-      "version": "1.4.0",
-      "dependencies": [
-        "collection"
-      ]
     }
   ],
   "configVersion": 1
