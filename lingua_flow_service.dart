@@ -1,10 +1,31 @@
 // Passo 5: Servico para integracao com API FastAPI
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:async';
+import 'dart:io';
 
 class LinguaFlowService {
-  static const String API_URL = 'https://linguaflow-api.onrender.com';
+  // Lê a URL da API a partir de uma variável de ambiente definida no build.
+  // Usa a URL de produção como padrão se nenhuma for fornecida.
+  static const String API_URL = String.fromEnvironment(
+    'API_URL',
+    defaultValue: 'https://linguaflow-kkfrorrender.com');
   static const String SESSION_ID = 'flutter_session';
+
+  // Helper para tratar respostas de erro da API de forma amigável
+  static void _handleResponseErrors(http.Response response) {
+    if (response.statusCode == 200) return;
+
+    String errorMessage = 'Erro no servidor (${response.statusCode})';
+    try {
+      // Tenta extrair a mensagem de erro detalhada da API (FastAPI usa o campo 'detail')
+      final body = jsonDecode(response.body);
+      if (body is Map && body['detail'] != null) {
+        errorMessage = body['detail'];
+      }
+    } catch (_) {}
+    throw Exception(errorMessage);
+  }
 
   // POST /chat - Enviar mensagem de texto
   static Future<Map<String, dynamic>> sendMessage(String message) async {
@@ -18,13 +39,15 @@ class LinguaFlowService {
         }),
       ).timeout(Duration(seconds: 30));
 
-      if (response.statusCode == 200) {
-        return jsonDecode(response.body);
-      } else {
-        throw Exception('Erro ${response.statusCode}: ${response.body}');
-      }
+      _handleResponseErrors(response);
+      return jsonDecode(response.body);
+    } on SocketException {
+      throw Exception('Sem conexão com a internet. Verifique sua rede.');
+    } on TimeoutException {
+      throw Exception('O servidor demorou muito para responder. Tente novamente.');
     } catch (e) {
-      throw Exception('Erro ao enviar mensagem: $e');
+      // Remove o prefixo "Exception: " se já existir para exibir apenas a mensagem limpa
+      throw Exception(e.toString().replaceAll('Exception: ', ''));
     }
   }
 
@@ -51,13 +74,14 @@ class LinguaFlowService {
 
       var response = await http.Response.fromStream(streamedResponse);
 
-      if (response.statusCode == 200) {
-        return jsonDecode(response.body);
-      } else {
-        throw Exception('Erro ${response.statusCode}: ${response.body}');
-      }
+      _handleResponseErrors(response);
+      return jsonDecode(response.body);
+    } on SocketException {
+      throw Exception('Sem conexão com a internet. Verifique sua rede.');
+    } on TimeoutException {
+      throw Exception('O envio do áudio demorou muito. Tente novamente.');
     } catch (e) {
-      throw Exception('Erro ao enviar audio: $e');
+      throw Exception(e.toString().replaceAll('Exception: ', ''));
     }
   }
 

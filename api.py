@@ -27,7 +27,7 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 if not GEMINI_API_KEY and not GROQ_API_KEY:
-    raise ValueError("Adicione GEMINI_API_KEY ou GROQ_API_KEY no .env")
+    logger.warning("ATENCAO: Nenhuma API Key encontrada (.env). O chat nao funcionara.")
 
 # Configurar Gemini
 if GEMINI_API_KEY:

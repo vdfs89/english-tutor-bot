@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Flutter (Produção)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": [
+                "--dart-define=API_URL=https://linguaflow-kkfrorrender.com"
+            ]
+        },
+        {
+            "name": "Flutter (Desenvolvimento)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": [
+                "--dart-define=API_URL=http://127.0.0.1:8000"
+            ]
+        }
+    ]
+}
