@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://vdfs89.github.io/english-tutor-bot/sitemap.xml
