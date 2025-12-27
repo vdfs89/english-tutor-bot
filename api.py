@@ -6,6 +6,7 @@ Custo: R$0,00 para sempre
 Confiabilidade: 99.9% com redundancia automatica
 """
 
+import io
 import logging
 import os
 from typing import Any, Dict, Optional
@@ -106,13 +107,13 @@ async def process_conversation_with_fallback(
             logger.info(f"Tentando Groq para {session_id}...")
             # Preparar historico para Groq
             messages = [
-                {"role": msg.get("role", "user"), "content": msg["content"]}
+                {"role": msg.get("role", "user"), "content": str(msg.get("content", ""))}
                 for msg in sessions[session_id]
             ]
             response = groq_client.chat.completions.create(
-                model="llama-3.1-70b-versatile", messages=messages, max_tokens=1024, temperature=0.7
+                model="llama-3.1-70b-versatile", messages=messages, max_tokens=1024, temperature=0.7  # type: ignore
             )
-            reply = response.choices[0].message.content
+            reply = response.choices[0].message.content or ""
             logger.info(f"Groq sucesso! Resposta: {reply[:50]}...")
             sessions[session_id].append({"role": "assistant", "content": reply})
             return reply, "groq"
@@ -177,11 +178,11 @@ async def chat_audio_endpoint(file: UploadFile = File(...), session_id: str = Fo
             raise HTTPException(status_code=500, detail="Groq nao configurado")
 
         # Usar Groq para transcricao
-        with open("/tmp/temp_audio.wav", "wb") as f:
-            f.write(audio_bytes)
-
-        with open("/tmp/temp_audio.wav", "rb") as f:
-            transcript = groq_client.audio.transcriptions.create(file=f, model="whisper-large-v3")
+        audio_file = io.BytesIO(audio_bytes)
+        audio_file.name = "audio.wav"
+        transcript = groq_client.audio.transcriptions.create(
+            file=audio_file, model="whisper-large-v3-turbo"
+        )
 
         transcribed_text = transcript.text
         logger.info(f"Transcricao: {transcribed_text}")

@@ -9,7 +9,7 @@ class LinguaFlowService {
   // Usa a URL de produção como padrão se nenhuma for fornecida.
   static const String API_URL = String.fromEnvironment(
     'API_URL',
-    defaultValue: 'https://linguaflow-kkfrorrender.com');
+    defaultValue: 'https://linguaflow-kkfr.onrender.com');
   static const String SESSION_ID = 'flutter_session';
 
   // Helper para tratar respostas de erro da API de forma amigável

@@ -7,7 +7,7 @@
             "type": "dart",
             "program": "lib/main.dart",
             "args": [
-                "--dart-define=API_URL=https://linguaflow-kkfrorrender.com"
+                "--dart-define=API_URL=https://linguaflow-kkfr.onrender.com"
             ]
         },
         {
@@ -18,6 +18,20 @@
             "args": [
                 "--dart-define=API_URL=http://127.0.0.1:8000"
             ]
+        },
+        {
+            "name": "Python: FastAPI",
+            "type": "python",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "api:app",
+                "--reload",
+                "--port",
+                "8000"
+            ],
+            "jinja": true,
+            "justMyCode": true
         }
     ]
 }
