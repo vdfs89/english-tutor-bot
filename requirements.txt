@@ -1,1 +1,38 @@
+# LinguaFlow - English Tutor AI
+# Main Dependencies
 
+# Web Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+
+# Environment Variables
+python-dotenv==1.0.0
+
+# AI/LLM
+langchain==0.1.0
+langchain-groq==0.0.1
+langchain-community==0.0.10
+
+# Web Interface
+streamlit==1.28.1
+streamlit-chat==0.1.1
+
+# Audio Processing
+speech-recognition==3.10.0
+pygame==2.5.2
+pydub==0.25.1
+
+# Data & API
+pydantic==2.5.0
+pydantic-settings==2.1.0
+requests==2.31.0
+
+# Database/Serialization
+python-multipart==0.0.6
+
+# Utilities
+click==8.1.7
+
+# IA MODELS - Gemini + Groq Fallback
+google-generativeai==0.3.0
+groq==0.9.0

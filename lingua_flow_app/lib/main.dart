@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:record/record.dart';
@@ -294,7 +293,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   icon: Icon(_isRecording ? Icons.stop : Icons.mic),
                   color: _isRecording ? Colors.red : Theme.of(context).colorScheme.primary,
                   style: IconButton.styleFrom(
-                    backgroundColor: _isRecording ? Colors.red.withOpacity(0.1) : Colors.transparent,
+                    backgroundColor: _isRecording ? Colors.red.withValues(alpha: 0.5) : Colors.transparent,
                   ),
                 ),
                 const SizedBox(width: 8),

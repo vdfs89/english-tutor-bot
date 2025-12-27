@@ -9,9 +9,9 @@ on:
       - 'lingua_flow_app/**'
       - '.github/workflows/manual.yml'
       - 'index.html'
-      - 'html-version/**'
       - 'interface_streamlit.py'
       - '!**.md'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -65,8 +65,6 @@ jobs:
           cp robots.txt deploy/
           cp sitemap.xml deploy/
           cp privacy-policy.html deploy/
-          # Copia a versão HTML/JS
-          cp -r html-version/ deploy/
 
           # Determine destination folder based on branch
           if [[ "${{ github.ref_name }}" == "staging" ]]; then

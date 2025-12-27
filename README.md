@@ -1,6 +1,7 @@
 # LinguaFlow - English Tutor AI
 
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Online-brightgreen?style=flat-square&logo=github)](https://vdfs89.github.io/english-tutor-bot/)
+[![Build and Deploy English Tutor Bot](https://github.com/vdfs89/english-tutor-bot/actions/workflows/manual.yml/badge.svg)](https://github.com/vdfs89/english-tutor-bot/actions/workflows/manual.yml)
 [![Streamlit App](https://img.shields.io/badge/Made%20with-Streamlit-FF4B4B?style=flat-square&logo=streamlit)](https://linguaflow.streamlit.app)
 [![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-blue?style=flat-square&logo=python)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
@@ -64,7 +65,7 @@ streamlit run interface_streamlit.py
 ### Technologies
 
 | Technology | Purpose |
-|----------|--------|
+| ---------- | -------- |
 | **Python** | Backend language |
 | **Streamlit** | Web framework |
 | **Groq API** | LLM provider (Llama 3, Whisper) |
@@ -195,7 +196,7 @@ streamlit run interface_streamlit.py
 ### Tecnologias
 
 | Tecnologia | Proposito |
-|----------|----------|
+| ---------- | ---------- |
 | **Python** | Linguagem backend |
 | **Streamlit** | Framework web |
 | **Groq API** | Provedor LLM (Llama 3, Whisper) |
